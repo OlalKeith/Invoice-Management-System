@@ -1,0 +1,63 @@
+.invoice-details {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.invoice-info p {
+  margin: 10px 0;
+}
+
+.invoice-items table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.invoice-items th,
+.invoice-items td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.paid {
+  color: green;
+}
+
+.status.unpaid {
+  color: red;
+}
+
+.status.due {
+  color: orange;
+}
+
+.status.overdue,
+.status.rejected,
+.status['received payment'] {
+  color: red;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}

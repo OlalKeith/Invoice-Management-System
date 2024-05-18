@@ -1,7 +1,11 @@
 import React from "react";
-import "../Dashboard/Dashboard.css";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+import "../Invoices/ViewInvoices.css";
+
+const ViewInvoices = () => {
+  const navigate = useNavigate();
+
   const invoices = [
     {
       id: "0012345",
@@ -19,31 +23,19 @@ const Dashboard = () => {
       due: "18-10-2023",
       status: "Unpaid",
     },
-    // ... add more invoices here
+    // Add more invoices here
   ];
 
+  const handleViewDetails = (id) => {
+    navigate(`/invoice-details/${id}`);
+  };
+
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h2>Overview</h2>
-        <button>Create Invoice</button>
+    <div className="view-invoices">
+      <header className="view-invoices-header">
+        <h2>Invoice Overview</h2>
       </header>
-      <div className="stats">
-        <div className="stat-card">
-          <h3>Total Invoice</h3>
-          <p>2260</p>
-        </div>
-        <div className="stat-card">
-          <h3>Pending Invoice</h3>
-          <p>1260</p>
-        </div>
-        <div className="stat-card">
-          <h3>Paid Invoice</h3>
-          <p>1000</p>
-        </div>
-      </div>
       <div className="invoice-overview">
-        <h2>Recent Invoices:</h2>
         <table>
           <thead>
             <tr>
@@ -67,7 +59,11 @@ const Dashboard = () => {
                 <td className={`status ${invoice.status.toLowerCase()}`}>
                   {invoice.status}
                 </td>
-                <td>...</td>
+                <td>
+                  <button onClick={() => handleViewDetails(invoice.id)}>
+                    View Details
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -77,4 +73,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ViewInvoices;

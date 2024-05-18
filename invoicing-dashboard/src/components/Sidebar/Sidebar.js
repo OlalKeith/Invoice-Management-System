@@ -1,12 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaUser,
   FaFileInvoiceDollar,
   FaCog,
-  FaBug,
 } from "react-icons/fa";
-// import "./Sidebar.css";
 import "../Sidebar/Sidebar.css";
 
 const Sidebar = () => {
@@ -17,22 +16,27 @@ const Sidebar = () => {
       </div>
       <ul className="sidebar-nav">
         <li>
-          <FaTachometerAlt /> Dashboard
+          <Link to="/">
+            <FaTachometerAlt /> Dashboard
+          </Link>
         </li>
         <li>
           <FaUser /> Contacts
         </li>
         <li className="active">
-          <FaFileInvoiceDollar /> Invoice
+          <Link to="/new-invoice">
+            <FaFileInvoiceDollar /> New Invoice
+          </Link>
         </li>
         <li>
-          <FaUser /> Leads
+          <Link to="/view-invoices">
+            <FaFileInvoiceDollar /> View Invoices
+          </Link>
         </li>
         <li>
-          <FaFileInvoiceDollar /> Reports
-        </li>
-        <li>
-          <FaCog /> Settings
+          <Link to="/settings">
+            <FaCog /> Settings
+          </Link>
         </li>
       </ul>
     </div>
