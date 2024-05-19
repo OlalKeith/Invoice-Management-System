@@ -1,32 +1,63 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "../Invoices/InvoiceDetails.css";
+import { updateInvoice, getInvoiceById } from "../Api/api";
 
 const InvoiceDetails = () => {
-  const { id } = useParams(); // useParams hook to access the route parameter
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [invoice, setInvoice] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const invoice = {
-    id: id,
-    client: "Sra Membrit",
-    date: "20-10-2023",
-    amount: 2350.0,
-    due: "20-10-2023",
-    status: "Paid",
-    items: [
-      { description: "Development work", quantity: 10, rate: 150 },
-      { description: "Design work", quantity: 5, rate: 100 },
-    ],
-    notes:
-      "Please make payment via bank transfer to account number 1234567890.",
+  useEffect(() => {
+    const fetchInvoice = async () => {
+      try {
+        const fetchedInvoice = await getInvoiceById(id);
+        setInvoice(fetchedInvoice);
+        setStatus(fetchedInvoice.status);
+      } catch (error) {
+        console.error("Error fetching invoice:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInvoice();
+  }, [id]);
+
+  const saveChanges = async () => {
+    try {
+      const updatedInvoice = { ...invoice, status };
+      await updateInvoice(id, updatedInvoice);
+      // success message
+      setSaveSuccess("Saved successfully !");
+      setTimeout(() => {
+        setSaveSuccess("");
+        navigate("/view-invoices");
+      }, 2000);
+    } catch (error) {
+      console.error("Error saving invoice:", error);
+    }
   };
 
-  const calculateAmount = (quantity, rate) => {
-    return (quantity * rate).toFixed(2);
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!invoice) {
+    return <div>No invoice found.</div>;
+  }
 
   return (
     <div className="invoice-details">
+      {saveSuccess && <div className="success-message">{saveSuccess}</div>}
       <header className="invoice-details-header">
         <h2>Invoice Details</h2>
       </header>
@@ -45,9 +76,7 @@ const InvoiceDetails = () => {
         </p>
         <p>
           <strong>Status:</strong>{" "}
-          <span className={`status ${invoice.status.toLowerCase()}`}>
-            {invoice.status}
-          </span>
+          <span className={`status ${status.toLowerCase()}`}>{status}</span>
         </p>
       </div>
       <div className="invoice-items">
@@ -59,6 +88,7 @@ const InvoiceDetails = () => {
               <th>Quantity</th>
               <th>Rate</th>
               <th>Amount</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -66,8 +96,22 @@ const InvoiceDetails = () => {
               <tr key={index}>
                 <td>{item.description}</td>
                 <td>{item.quantity}</td>
-                <td>${item.rate.toFixed(2)}</td>
-                <td>${calculateAmount(item.quantity, item.rate)}</td>
+                <td>${item.rate}</td>
+                <td>${invoice.amount}</td>
+                <td>
+                  <button
+                    className={status === "Paid" ? "paid" : "unpaid"}
+                    onClick={() => handleStatusChange("Paid")}
+                  >
+                    Paid
+                  </button>
+                  <button
+                    className={status === "Unpaid" ? "paid" : "unpaid"}
+                    onClick={() => handleStatusChange("Unpaid")}
+                  >
+                    Unpaid
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -79,7 +123,7 @@ const InvoiceDetails = () => {
       </div>
       <footer className="invoice-details-footer">
         <button>Edit Invoice</button>
-        <button>Send Reminder</button>
+        <button onClick={saveChanges}>Save</button>
       </footer>
     </div>
   );

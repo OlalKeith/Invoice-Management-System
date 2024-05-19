@@ -63,3 +63,11 @@ button {
   cursor: pointer;
   margin-right: 10px;
 }
+
+.invoice-details button.paid {
+  background-color: green; /* Paid button color */
+}
+
+.invoice-details button.unpaid {
+  background-color: red; /* Unpaid button color */
+}

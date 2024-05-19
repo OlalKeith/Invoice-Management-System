@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Invoices/NewInvoice.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import CustomDatePicker from "../DatePicker/CustomDatePicker";
 import NewCustomDatePicker from "../DatePicker/NewCustomDatePicker";
 import { createInvoice } from "../Api/api";
@@ -16,6 +17,10 @@ const NewInvoice = () => {
     date: "",
     dueDate: "",
   });
+
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleItemChange = (index, e) => {
     const updatedItems = [...items];
@@ -42,40 +47,80 @@ const NewInvoice = () => {
     return (quantity * rate).toFixed(2);
   };
 
+  const calculateSubtotal = () => {
+    return items.reduce((acc, item) => acc + item.quantity * item.rate, 0);
+  };
+
+  const calculateTaxes = (subtotal) => {
+    const taxRate = 0.16; // 16%
+    return (subtotal * taxRate).toFixed(2);
+  };
+
   const calculateTotal = () => {
-    return items
-      .reduce((acc, item) => acc + item.quantity * item.rate, 0)
-      .toFixed(2);
+    const subtotal = calculateSubtotal();
+    const taxes = calculateTaxes(subtotal);
+    return (subtotal + parseFloat(taxes)).toFixed(2);
   };
 
   const handleSave = async () => {
     console.log("Save button clicked");
+    // validation
+    if (
+      !clientInfo.name ||
+      !clientInfo.email ||
+      !clientInfo.address ||
+      items.some((item) => !item.description || !item.quantity || !item.rate)
+    ) {
+      setError("Please fill out all required fields.");
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(clientInfo.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
     try {
       const invoiceData = {
         client: clientInfo.name,
-        date: clientInfo.date,
+        email: clientInfo.email,
+        address: clientInfo.address,
         amount: calculateTotal(),
-        due: clientInfo.dueDate,
+        invoicedate: clientInfo.date,
+        duedate: clientInfo.dueDate,
         status: "Unpaid",
         items: items,
         notes: notes,
       };
       await createInvoice(invoiceData);
-      console.log("Invoice successfully created!"); // Call createInvoice function to save data
-      // Handle success or navigation to another page
+      console.log("Invoice successfully created!"); //save data
+
+      setError("");
+
+      // success message
+      setSuccessMessage("Invoice successfully created!");
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/view-invoices");
+      }, 2000);
     } catch (error) {
       console.error("Error saving invoice:", error);
-      // Handle error
     }
   };
 
   return (
     <div className="new-invoice">
+      {error && <div className="error-message">{error}</div>}
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
+
       <header className="new-invoice-header">
         <h2>Create New Invoice</h2>
         <div>
-          <button onClick={handleSave}>Save</button>
-          <button>Send</button>
+          <button onClick={handleSave}>Save Invoice</button>
+          <button>Send Invoice</button>
         </div>
       </header>
 
@@ -133,6 +178,7 @@ const NewInvoice = () => {
                   <input
                     type="text"
                     name="description"
+                    placeholder="materials/labor"
                     value={item.description}
                     onChange={(e) => handleItemChange(index, e)}
                   />
@@ -171,13 +217,13 @@ const NewInvoice = () => {
 
       <div className="invoice-summary">
         <h3>Summary</h3>
-        <p>Subtotal: ${calculateTotal()}</p>
-        <p>Taxes: $0.00</p>
+        <p>Subtotal: ${calculateSubtotal()}</p>
+        <p>Taxes: ${calculateTaxes(calculateSubtotal())}</p>
         <h4>Total: ${calculateTotal()}</h4>
       </div>
 
       <footer className="new-invoice-footer">
-        <button>Save as Draft</button>
+        <button onClick={handleSave}>Save Invoice</button>{" "}
         <button>Send Invoice</button>
       </footer>
     </div>

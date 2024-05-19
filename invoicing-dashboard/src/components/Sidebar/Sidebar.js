@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  FaTachometerAlt,
-  FaUser,
-  FaFileInvoiceDollar,
-  FaCog,
-} from "react-icons/fa";
+import { FaTachometerAlt, FaFileInvoiceDollar, FaCog } from "react-icons/fa";
 import "../Sidebar/Sidebar.css";
 
 const Sidebar = () => {
@@ -19,9 +14,6 @@ const Sidebar = () => {
           <Link to="/">
             <FaTachometerAlt /> Dashboard
           </Link>
-        </li>
-        <li>
-          <FaUser /> Contacts
         </li>
         <li className="active">
           <Link to="/new-invoice">

@@ -1,45 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Dashboard/Dashboard.css";
+import { getInvoices } from "../Api/api";
 
 const Dashboard = () => {
-  const invoices = [
-    {
-      id: "0012345",
-      client: "Sra Membrit",
-      date: "20-10-2023",
-      amount: 2350.0,
-      due: "20-10-2023",
-      status: "Paid",
-    },
-    {
-      id: "0012346",
-      client: "Pete Sariya",
-      date: "18-10-2023",
-      amount: 4350.0,
-      due: "18-10-2023",
-      status: "Unpaid",
-    },
-    // ... add more invoices here
-  ];
+  const [invoices, setInvoices] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const fetchedInvoices = await getInvoices(); // Fetch invoices
+        setInvoices(fetchedInvoices);
+      } catch (error) {
+        console.error("Error fetching invoices:", error);
+      }
+    };
+
+    fetchInvoices();
+  }, []);
+
+  const handleCreateInvoice = () => {
+    navigate("/new-invoice"); // Navigate to new invoice page
+  };
+
+  const handleViewDetails = (id) => {
+    navigate(`/invoice-details/${id}`);
+  };
+
+  // Calculate the total, pending, and paid invoices
+  const totalInvoices = invoices.length;
+  const unpaidInvoices = invoices.filter(
+    (invoice) => invoice.status.toLowerCase() === "unpaid"
+  ).length;
+  const paidInvoices = invoices.filter(
+    (invoice) => invoice.status.toLowerCase() === "paid"
+  ).length;
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
         <h2>Overview</h2>
-        <button>Create Invoice</button>
+        <button onClick={handleCreateInvoice}>Create Invoice</button>
       </header>
       <div className="stats">
         <div className="stat-card">
           <h3>Total Invoice</h3>
-          <p>2260</p>
+          <p>{totalInvoices}</p>
         </div>
         <div className="stat-card">
-          <h3>Pending Invoice</h3>
-          <p>1260</p>
+          <h3>Unpaid Invoice</h3>
+          <p>{unpaidInvoices}</p>
         </div>
         <div className="stat-card">
           <h3>Paid Invoice</h3>
-          <p>1000</p>
+          <p>{paidInvoices}</p>
         </div>
       </div>
       <div className="invoice-overview">
@@ -62,12 +77,16 @@ const Dashboard = () => {
                 <td>{invoice.id}</td>
                 <td>{invoice.client}</td>
                 <td>{invoice.date}</td>
-                <td>${invoice.amount.toFixed(2)}</td>
+                <td>${invoice.amount}</td>
                 <td>{invoice.due}</td>
                 <td className={`status ${invoice.status.toLowerCase()}`}>
                   {invoice.status}
                 </td>
-                <td>...</td>
+                <td>
+                  <button onClick={() => handleViewDetails(invoice.id)}>
+                    View Details
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

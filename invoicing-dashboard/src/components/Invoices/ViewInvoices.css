@@ -57,3 +57,12 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+button.delete-button {
+  background-color: red;
+  color: white;
+}
+
+button.delete-button:hover {
+  background-color: darkred;
+}
