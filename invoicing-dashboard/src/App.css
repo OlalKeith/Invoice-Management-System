@@ -1,6 +1,12 @@
 .app {
   display: flex;
   font-family: Arial, sans-serif;
+  height: 105vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
 }
 
 body {

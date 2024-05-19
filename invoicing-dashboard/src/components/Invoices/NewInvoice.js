@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "../Invoices/NewInvoice.css";
+import CustomDatePicker from "../DatePicker/CustomDatePicker";
+import NewCustomDatePicker from "../DatePicker/NewCustomDatePicker";
+import { createInvoice } from "../Api/api";
 
 const NewInvoice = () => {
   const [items, setItems] = useState([
@@ -45,48 +48,70 @@ const NewInvoice = () => {
       .toFixed(2);
   };
 
+  const handleSave = async () => {
+    console.log("Save button clicked");
+    try {
+      const invoiceData = {
+        client: clientInfo.name,
+        date: clientInfo.date,
+        amount: calculateTotal(),
+        due: clientInfo.dueDate,
+        status: "Unpaid",
+        items: items,
+        notes: notes,
+      };
+      await createInvoice(invoiceData);
+      console.log("Invoice successfully created!"); // Call createInvoice function to save data
+      // Handle success or navigation to another page
+    } catch (error) {
+      console.error("Error saving invoice:", error);
+      // Handle error
+    }
+  };
+
   return (
     <div className="new-invoice">
       <header className="new-invoice-header">
         <h2>Create New Invoice</h2>
         <div>
-          <button>Save</button>
+          <button onClick={handleSave}>Save</button>
           <button>Send</button>
         </div>
       </header>
 
       <div className="client-info">
-        <h3>Client Information</h3>
-        <input
-          type="text"
-          name="name"
-          placeholder="Client Name"
-          onChange={handleClientChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Client Email"
-          onChange={handleClientChange}
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Client Address"
-          onChange={handleClientChange}
-        />
-        <input
-          type="date"
-          name="date"
-          placeholder="Invoice Date"
-          onChange={handleClientChange}
-        />
-        <input
-          type="date"
-          name="dueDate"
-          placeholder="Due Date"
-          onChange={handleClientChange}
-        />
+        <div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Client Name"
+            onChange={handleClientChange}
+          />
+        </div>
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Client Email"
+            onChange={handleClientChange}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="address"
+            placeholder="Client Address"
+            onChange={handleClientChange}
+          />
+        </div>
+        <label>
+          Invoice Date
+          <CustomDatePicker placeholder="Select a date" />
+        </label>
+        <label>
+          Due Date
+          <NewCustomDatePicker placeholder="Select a date" />
+        </label>
       </div>
 
       <div className="invoice-items">
