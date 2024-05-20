@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import NewInvoice from "./components/Invoices/NewInvoice";
 import ViewInvoices from "./components/Invoices/ViewInvoices";
 import InvoiceDetails from "./components/Invoices/InvoiceDetails";
+import EditInvoice from "./components/Invoices/EditInvoice";
 import Settings from "./components/Settings/Settings";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/view-invoices" element={<ViewInvoices />} />
             <Route path="/invoice-details/:id" element={<InvoiceDetails />} />
+            <Route path="/edit-invoice/:id" element={<EditInvoice />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </main>

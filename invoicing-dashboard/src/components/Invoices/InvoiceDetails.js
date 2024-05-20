@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../Invoices/InvoiceDetails.css";
+
 import { updateInvoice, getInvoiceById } from "../Api/api";
 
 const InvoiceDetails = () => {
@@ -122,7 +123,9 @@ const InvoiceDetails = () => {
         <p>{invoice.notes}</p>
       </div>
       <footer className="invoice-details-footer">
-        <button>Edit Invoice</button>
+        <button onClick={() => navigate(`/edit-invoice/${id}`)}>
+          Edit Invoice
+        </button>{" "}
         <button onClick={saveChanges}>Save</button>
       </footer>
     </div>
