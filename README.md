@@ -31,3 +31,7 @@ git clone [https://github.com/your-username/your-repository.git](https://github.
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+
+# Figma Design
+https://www.figma.com/design/0CCs7lFaZA6TvfobUe1oGL/Invoice-Management-System?node-id=0%3A1&t=NJlK5lKs4Qv8fpKJ-1
