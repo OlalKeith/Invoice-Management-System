@@ -3,10 +3,10 @@ import "../Settings/Settings.css";
 
 const Settings = () => {
   const [settings, setSettings] = useState({
-    companyName: "In Soft",
-    email: "info@insoft.com",
-    address: "123 Main St, Anytown, USA",
-    phone: "123-456-7890",
+    companyName: "West minister",
+    email: "Westminister.com",
+    address: "Nairobi, kenya",
+    phone: "254-00-000",
     taxRate: 0,
   });
 

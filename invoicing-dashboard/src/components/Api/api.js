@@ -1,5 +1,6 @@
 // src/components/api.js
 import axios from "axios";
+// import nodemailer from "nodemailer";
 
 const API_URL = "http://localhost:5000";
 
@@ -56,3 +57,40 @@ export const deleteInvoice = async (id, invoice) => {
     throw error;
   }
 };
+
+// Send invoice email using Nodemailer
+// export const sendInvoiceEmail = async (email, invoiceData) => {
+//   try {
+//     // Create a Nodemailer transporter
+//     let transporter = nodemailer.createTransport({
+//       service: "Gmail",
+//       auth: {
+//         user: "your_email@gmail.com", // Your Gmail address
+//         pass: "your_password", // Your Gmail password
+//       },
+//     });
+
+//     // Send mail with defined transport object
+//     let info = await transporter.sendMail({
+//       from: '"Your Company" <your_email@gmail.com>', // Sender address
+//       to: email, // List of receivers
+//       subject: "Invoice from Your Company", // Subject line
+//       html: `
+//         <p>Dear Customer,</p>
+//         <p>Please find attached the invoice for your recent purchase.</p>
+//         <p>Invoice Details:</p>
+//         <ul>
+//           <li>Client: ${invoiceData.client}</li>
+//           <li>Amount: ${invoiceData.amount}</li>
+//           <!-- Add more invoice details here -->
+//         </ul>
+//         <p>Thank you for your business.</p>
+//       `, // HTML body
+//     });
+
+//     console.log("Message sent: %s", info.messageId);
+//   } catch (error) {
+//     console.error("Error sending invoice email", error);
+//     throw error;
+//   }
+// };
