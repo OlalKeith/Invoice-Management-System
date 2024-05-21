@@ -43,12 +43,6 @@
   color: orange;
 }
 
-.status.overdue,
-.status.rejected,
-.status['received payment'] {
-  color: red;
-}
-
 button {
   background-color: #4caf50;
   color: white;

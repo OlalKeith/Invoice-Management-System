@@ -48,12 +48,6 @@
   color: orange;
 }
 
-.status.overdue,
-.status.rejected,
-.status['received payment'] {
-  color: red;
-}
-
 button {
   background-color: #4caf50;
   color: white;
@@ -65,9 +59,18 @@ button {
 }
 
 .invoice-details button.paid {
-  background-color: green; /* Paid button color */
+  background-color: green;
 }
 
 .invoice-details button.unpaid {
-  background-color: red; /* Unpaid button color */
+  background-color: red;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 5px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
