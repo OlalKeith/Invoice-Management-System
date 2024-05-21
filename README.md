@@ -14,7 +14,7 @@ You have a working internet connection.
 1. Clone the App
    First, clone the repository to your local machine using the following command:
 
-git clone [https://github.com/your-username/your-repository.git](https://github.com/OlalKeith/Invoice-Management-System)
+git clone [https://github.com/OlalKeith/Invoice-Management-System](https://github.com/OlalKeith/Invoice-Management-System)
 
 2. Install json-server
    Navigate to the project directory and install json-server by running:
