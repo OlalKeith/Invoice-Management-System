@@ -35,5 +35,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 # Hosted on Vercel
 Click: [https://invoicing-dashboard-one.vercel.app/](https://invoicing-dashboard-one.vercel.app/)
 
+# Hosted [Json Server](https://github.com/typicode/json-server) on [Render](https://render.com/)
+Click: [invoice-db-render](https://invoice-db-render.onrender.com))
+
 # Figma Design
 https://www.figma.com/design/0CCs7lFaZA6TvfobUe1oGL/Invoice-Management-System?node-id=0%3A1&t=NJlK5lKs4Qv8fpKJ-1
