@@ -14,7 +14,7 @@ You have a working internet connection.
 1. Clone the App
    First, clone the repository to your local machine using the following command:
 
-git clone [https://github.com/your-username/your-repository.git](https://github.com/OlalKeith/Invoice-Management-System)
+git clone [https://github.com/OlalKeith/Invoice-Management-System](https://github.com/OlalKeith/Invoice-Management-System)
 
 2. Install json-server
    Navigate to the project directory and install json-server by running:
@@ -32,6 +32,8 @@ git clone [https://github.com/your-username/your-repository.git](https://github.
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+# Hosted on Vercel
+Click: [https://invoicing-dashboard-one.vercel.app/](https://invoicing-dashboard-one.vercel.app/)
 
 # Figma Design
 https://www.figma.com/design/0CCs7lFaZA6TvfobUe1oGL/Invoice-Management-System?node-id=0%3A1&t=NJlK5lKs4Qv8fpKJ-1
