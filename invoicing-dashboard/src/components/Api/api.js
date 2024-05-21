@@ -3,7 +3,7 @@ import axios from "axios";
 // import nodemailer from "nodemailer";
 
 // const API_URL = "http://localhost:5000";
-const API_URL = "https://invoice-db-render.onrender.com";
+const API_URL = "https://invoice-db-render.onrender.com"; //render.com
 
 // Get all invoices
 export const getInvoices = async () => {
